@@ -1,0 +1,159 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-dm-serif), ui-serif, Georgia, serif;
+
+  --color-masa: #fff4dc;
+  --color-cacao: #32140f;
+  --color-cacao-soft: #4a2219;
+  --color-terracotta: #b8422b;
+  --color-terracotta-deep: #9a3520;
+  --color-clay: #e7c6ac;
+  --color-agave: #5a6750;
+  --color-marigold: #d7a33f;
+  --color-rule: #d8c6aa;
+  --color-ink-muted: #6b4a3f;
+
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+}
+
+:root {
+  color-scheme: light;
+  --background: #fff4dc;
+  --foreground: #32140f;
+  --card: #fff4dc;
+  --card-foreground: #32140f;
+  --primary: #b8422b;
+  --primary-foreground: #fff4dc;
+  --secondary: #e7c6ac;
+  --secondary-foreground: #32140f;
+  --muted: #e7c6ac;
+  --muted-foreground: #6b4a3f;
+  --accent: #e7c6ac;
+  --accent-foreground: #32140f;
+  --border: #d8c6aa;
+  --input: #d8c6aa;
+  --ring: #b8422b;
+  --radius: 0.5rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+  }
+  body {
+    @apply bg-cacao text-cacao font-sans;
+    overflow-x: hidden;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-terracotta);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  .on-dark :focus-visible {
+    outline-color: var(--color-marigold);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .paper {
+    position: relative;
+    isolation: isolate;
+  }
+  .paper::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.35;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.22 0 0 0 0 0.12 0 0 0 0.18 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  .tile-grid {
+    background-image:
+      linear-gradient(to right, rgb(255 244 220 / 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 244 220 / 0.05) 1px, transparent 1px),
+      radial-gradient(circle at center, rgb(215 163 63 / 0.08) 1.5px, transparent 2px);
+    background-size:
+      56px 56px,
+      56px 56px,
+      56px 56px;
+    background-position:
+      0 0,
+      0 0,
+      28px 28px;
+  }
+
+  .display {
+    @apply font-serif;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 0.98;
+    padding-bottom: 0.06em;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 700ms ease,
+      transform 700ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .reveal[data-visible='true'] {
+    opacity: 1;
+    transform: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
